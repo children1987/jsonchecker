@@ -35,16 +35,22 @@ class DuplicateKeyFinderTest(DuplicateFinderTest):
 
     def test_check_file(self):
         """Test there are no errors in all known good data files."""
-        finder = self.check_directory_helper(self.finder, self.path('testdata/good'))
+        sub_path = os.path.join('testdata', 'good')
+        finder = self.check_directory_helper(self.finder, self.path(sub_path))
         self.assertEqual(finder.errors, {})
 
     def test_check_bad_file(self):
         """Verify errors are detected in all bad data files."""
-        finder = self.check_directory_helper(self.finder, self.path('testdata/bad'))
-        self.expected_error_helper(finder, 'testdata/bad/bad.json', 'key')
-        self.expected_error_helper(finder, 'testdata/bad/bad2.json', 'key3')
-        self.expected_error_helper(finder, 'testdata/bad/bad3.json', 'key6')
-        self.assertIn(self.path('testdata/bad/invalid.json'), finder.invalids)
+        sub_path = os.path.join('testdata', 'bad')
+        finder = self.check_directory_helper(self.finder, self.path(sub_path))
+        sub_path = os.path.join('testdata', 'bad', 'bad.json')
+        self.expected_error_helper(finder, sub_path, 'key')
+        sub_path = os.path.join('testdata', 'bad', 'bad2.json')
+        self.expected_error_helper(finder, sub_path, 'key3')
+        sub_path = os.path.join('testdata', 'bad', 'bad3.json')
+        self.expected_error_helper(finder, sub_path, 'key6')
+        sub_path = os.path.join('testdata', 'bad', 'invalid.json')
+        self.assertIn(self.path(sub_path), finder.invalids)
 
 
 class DuplicateValueFinderTest(DuplicateFinderTest):
@@ -56,15 +62,20 @@ class DuplicateValueFinderTest(DuplicateFinderTest):
 
     def test_check_file(self):
         """Test there are no errors in all known good data files."""
-        finder = self.check_directory_helper(self.finder, self.path('testdata/good'))
+        sub_path = os.path.join('testdata', 'good')
+        finder = self.check_directory_helper(self.finder, self.path(sub_path))
         self.assertEqual(finder.errors, {})
 
     def test_check_bad_file(self):
         """Verify errors are detected in all bad data files."""
-        finder = self.check_directory_helper(self.finder, self.path('testdata/bad'))
-        self.expected_error_helper(finder, 'testdata/bad/bad-values.json', 'value3')
-        self.expected_error_helper(finder, 'testdata/bad/bad-values2.json', 'value11')
-        self.assertIn(self.path('testdata/bad/invalid.json'), finder.invalids)
+        sub_path = os.path.join('testdata', 'bad')
+        finder = self.check_directory_helper(self.finder, self.path(sub_path))
+        sub_path = os.path.join('testdata', 'bad', 'bad-values.json')
+        self.expected_error_helper(finder, sub_path, 'value3')
+        sub_path = os.path.join('testdata', 'bad', 'bad-values2.json')
+        self.expected_error_helper(finder, sub_path, 'value11')
+        sub_path = os.path.join('testdata', 'bad', 'invalid.json')
+        self.assertIn(self.path(sub_path), finder.invalids)
 
 
 if __name__ == '__main__':
